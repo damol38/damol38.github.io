@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>재난 대비 영상 → 생존가방</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    body { background:#f8fafc }
+    .ratio-16x9 { position: relative; width: 100%; padding-top: 56.25%; }
+    .ratio-16x9 iframe { position: absolute; inset:0; width:100%; height:100%; border:0; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel" data-presets="react,env">
+function App(){
+  const [fire, setFire] = React.useState(false);
+  const [eq, setEq] = React.useState(false);
+  const ready = fire && eq;
+  return (
+    <div className="min-h-screen p-6 bg-gradient-to-br from-blue-50 to-orange-50">
+      <div className="max-w-5xl mx-auto">
+        <h1 className="text-3xl font-extrabold text-gray-800 mb-6 text-center">🎬 재난 대비 영상 시청</h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="bg-white rounded-2xl shadow p-4">
+            <h2 className="font-bold text-xl mb-2">🔥 화재 예방</h2>
+            <div className="ratio-16x9 mb-3">
+              <iframe src="https://www.youtube.com/embed/UNg2QyQ7fTY" allowfullscreen></iframe>
+            </div>
+            <button onClick={()=>setFire(true)} disabled={fire}
+              className={`w-full py-2 rounded-lg font-bold ${fire?'bg-green-100 text-green-700':'bg-red-500 text-white hover:bg-red-600'}`}>
+              {fire ? '✓ 시청 완료' : '시청 완료 표시'}
+            </button>
+          </div>
+          <div className="bg-white rounded-2xl shadow p-4">
+            <h2 className="font-bold text-xl mb-2">🌏 지진 대비</h2>
+            <div className="ratio-16x9 mb-3">
+              <iframe src="https://www.youtube.com/embed/DgjtZSGQGHQ" allowfullscreen></iframe>
+            </div>
+            <button onClick={()=>setEq(true)} disabled={eq}
+              className={`w-full py-2 rounded-lg font-bold ${eq?'bg-green-100 text-green-700':'bg-orange-500 text-white hover:bg-orange-600'}`}>
+              {eq ? '✓ 시청 완료' : '시청 완료 표시'}
+            </button>
+          </div>
+        </div>
+        <div className="text-center mt-6">
+          <button
+            onClick={()=>{ if(ready){ window.location.href='https://damol38.github.io/'; } }}
+            disabled={!ready}
+            className={`px-8 py-3 rounded-xl font-bold text-white ${ready?'bg-emerald-500 hover:bg-emerald-600':'bg-gray-300 cursor-not-allowed'}`}>
+            {ready ? '생존가방 꾸리기 시작 →' : '두 영상을 모두 시청해주세요'}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+  </script>
+</body>
+</html>
